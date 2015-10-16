@@ -1,5 +1,6 @@
 package com.rodico.duke0808.myapplication.Browser;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rodico.duke0808.myapplication.R;
+import com.rodico.duke0808.myapplication.activity.DynamicFragmensAdd.FragmActivity;
 import com.rodico.duke0808.myapplication.activity.Fragment1.Main_Activity1;
 import com.rodico.duke0808.myapplication.activity.ListWorks.MainActivity;
 import com.rodico.duke0808.myapplication.activity.Notification.NotificationActivity;
@@ -46,6 +48,7 @@ public class BrowserActivity extends AppCompatActivity {
         //add new lesson here
         homeWorkItemList.add(new HomeWorkItem("Notification",this, NotificationActivity.class));
         homeWorkItemList.add(new HomeWorkItem("Fragments #1",this, Main_Activity1.class));
+        homeWorkItemList.add(new HomeWorkItem("Dynamically Add Fragments",this, FragmActivity.class));
 
         //setting adapter
         hwAdapter  = new HwAdapter(homeWorkItemList,this);
