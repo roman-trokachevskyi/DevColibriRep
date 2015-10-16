@@ -11,8 +11,6 @@
         <activity android:name=".activity.ListWorks.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-
             </intent-filter>
         </activity>
         <activity android:name=".Browser.BrowserActivity" >
@@ -21,6 +19,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.Notification.NotificationActivity" >
+        </activity>
+        <activity android:name=".activity.Notification.Main2Activity" >
+        </activity>
+        <activity android:name=".activity.Fragment1.Main_Activity1" >
         </activity>
     </application>
 
