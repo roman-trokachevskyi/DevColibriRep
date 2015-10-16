@@ -1,13 +1,12 @@
-package com.rodico.duke0808.myapplication.activity;
+package com.rodico.duke0808.myapplication.activity.ListWorks;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDialog(View v){
+
+        //showing alert dialog!!!
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Question")
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+        //notification experiments
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+
     }
 
     public void init(){

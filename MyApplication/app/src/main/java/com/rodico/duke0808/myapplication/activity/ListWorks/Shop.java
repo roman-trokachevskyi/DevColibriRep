@@ -1,4 +1,4 @@
-package com.rodico.duke0808.myapplication.activity;
+package com.rodico.duke0808.myapplication.activity.ListWorks;
 
 /**
  * Created by duke0808 on 15.10.15.

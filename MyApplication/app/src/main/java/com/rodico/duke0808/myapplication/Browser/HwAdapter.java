@@ -1,4 +1,4 @@
-package com.rodico.duke0808.myapplication.activity;
+package com.rodico.duke0808.myapplication.Browser;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,12 +14,11 @@ import java.util.List;
 /**
  * Created by duke0808 on 15.10.15.
  */
-public class ShopAdapter extends BaseAdapter {
-
-    List<Shop> list;
+public class HwAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
+    List<HomeWorkItem> list;
 
-    public ShopAdapter(Context context, List<Shop> list) {
+    public HwAdapter(List<HomeWorkItem> list, Context context) {
         this.list = list;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -36,20 +35,19 @@ public class ShopAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return list.get(position).getId();
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view==null){
-            view = layoutInflater.inflate(R.layout.shop_item_layout,parent,false);
+            view = layoutInflater.inflate(R.layout.item_activity_layout, parent, false);
         }
+        TextView textView = (TextView) view.findViewById(R.id.textView4);
+        HomeWorkItem homeWorkItem = (HomeWorkItem) getItem(position);
+        textView.setText(homeWorkItem.getName());
 
-
-        TextView textView = (TextView) view.findViewById(R.id.textView2);
-        Shop shop = (Shop) getItem(position);
-        textView.setText(shop.getName());
         return view;
     }
 }
