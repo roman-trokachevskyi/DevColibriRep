@@ -15,6 +15,7 @@ import com.rodico.duke0808.myapplication.activity.DynamicFragmensAdd.FragmActivi
 import com.rodico.duke0808.myapplication.activity.Fragment1.Main_Activity1;
 import com.rodico.duke0808.myapplication.activity.ListWorks.MainActivity;
 import com.rodico.duke0808.myapplication.activity.Notification.NotificationActivity;
+import com.rodico.duke0808.myapplication.activity.Services_Intro.ServicesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class BrowserActivity extends AppCompatActivity {
         homeWorkItemList.add(new HomeWorkItem("Fragments #1",this, Main_Activity1.class));
         homeWorkItemList.add(new HomeWorkItem("Dynamically Add Fragments",this, FragmActivity.class));
         homeWorkItemList.add(new HomeWorkItem("Hello AsyncTasks",this, AsyncTaskActivity.class));
+        homeWorkItemList.add(new HomeWorkItem("Services Intro",this, ServicesActivity.class));
 
         //setting adapter
         hwAdapter  = new HwAdapter(homeWorkItemList,this);
