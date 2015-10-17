@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".activity.DynamicFragmensAdd.FragmActivity" >
         </activity>
+        <activity android:name=".activity.AsynkTask.AsyncTaskActivity" >
+        </activity>
     </application>
 
 </manifest>

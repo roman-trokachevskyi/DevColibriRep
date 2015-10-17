@@ -10,8 +10,8 @@ import android.view.View;
 import com.rodico.duke0808.myapplication.R;
 
 public class FragmActivity extends FragmentActivity {
-    private Fragment1 fragment1;
-    private Fragment2 fragment2;
+    static Fragment1 fragment1;
+    static Fragment2 fragment2;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -32,8 +32,8 @@ public class FragmActivity extends FragmentActivity {
         switch (v.getId()){
 
             case R.id.addButton:
-                if (fragmentManager.findFragmentByTag(fragment1.TAG)==null) {
-                    fragmentTransaction.add(R.id.container,fragment1,fragment1.TAG);
+                if (fragmentManager.findFragmentByTag(fragment2.TAG)==null) {
+                    fragmentTransaction.add(R.id.container,fragment2,fragment2.TAG);
                 } break;
 
 

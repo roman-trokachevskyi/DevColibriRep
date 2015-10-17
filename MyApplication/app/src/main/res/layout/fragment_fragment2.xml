@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="My Second Fragment"
-        android:id="@+id/textView6"
+        android:id="@+id/textViewFR2"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textColor="#1e00ff" />

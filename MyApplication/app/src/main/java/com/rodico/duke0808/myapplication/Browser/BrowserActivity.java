@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rodico.duke0808.myapplication.R;
+import com.rodico.duke0808.myapplication.activity.AsynkTask.AsyncTaskActivity;
 import com.rodico.duke0808.myapplication.activity.DynamicFragmensAdd.FragmActivity;
 import com.rodico.duke0808.myapplication.activity.Fragment1.Main_Activity1;
 import com.rodico.duke0808.myapplication.activity.ListWorks.MainActivity;
@@ -49,6 +50,7 @@ public class BrowserActivity extends AppCompatActivity {
         homeWorkItemList.add(new HomeWorkItem("Notification",this, NotificationActivity.class));
         homeWorkItemList.add(new HomeWorkItem("Fragments #1",this, Main_Activity1.class));
         homeWorkItemList.add(new HomeWorkItem("Dynamically Add Fragments",this, FragmActivity.class));
+        homeWorkItemList.add(new HomeWorkItem("Hello AsyncTasks",this, AsyncTaskActivity.class));
 
         //setting adapter
         hwAdapter  = new HwAdapter(homeWorkItemList,this);

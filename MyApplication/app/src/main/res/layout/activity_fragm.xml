@@ -41,9 +41,19 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/container"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/fragment3"></LinearLayout>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.rodico.duke0808.myapplication.activity.DynamicFragmensAdd.Fragment1"
+        android:id="@+id/fragment3"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:id="@+id/container"></LinearLayout>
+        tools:layout="@layout/fragment_fragment1" />
 
 </RelativeLayout>
