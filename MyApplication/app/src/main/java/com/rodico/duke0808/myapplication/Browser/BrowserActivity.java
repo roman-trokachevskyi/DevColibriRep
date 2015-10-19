@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.rodico.duke0808.myapplication.R;
 import com.rodico.duke0808.myapplication.activity.AsynkTask.AsyncTaskActivity;
+import com.rodico.duke0808.myapplication.activity.CameraIntro.Main3Activity;
 import com.rodico.duke0808.myapplication.activity.DynamicFragmensAdd.FragmActivity;
 import com.rodico.duke0808.myapplication.activity.Fragment1.Main_Activity1;
 import com.rodico.duke0808.myapplication.activity.ListWorks.MainActivity;
@@ -53,6 +54,7 @@ public class BrowserActivity extends AppCompatActivity {
         homeWorkItemList.add(new HomeWorkItem("Dynamically Add Fragments",this, FragmActivity.class));
         homeWorkItemList.add(new HomeWorkItem("Hello AsyncTasks",this, AsyncTaskActivity.class));
         homeWorkItemList.add(new HomeWorkItem("Services Intro",this, ServicesActivity.class));
+        homeWorkItemList.add(new HomeWorkItem("Camera Intro",this, Main3Activity.class));
 
         //setting adapter
         hwAdapter  = new HwAdapter(homeWorkItemList,this);
