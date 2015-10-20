@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -17,6 +18,7 @@ import com.rodico.duke0808.myapplication.activity.DynamicFragmensAdd.FragmActivi
 import com.rodico.duke0808.myapplication.activity.Fragment1.Main_Activity1;
 import com.rodico.duke0808.myapplication.activity.ListWorks.MainActivity;
 import com.rodico.duke0808.myapplication.activity.Notification.NotificationActivity;
+import com.rodico.duke0808.myapplication.activity.PickFromGallery.FromGallery;
 import com.rodico.duke0808.myapplication.activity.Services_Intro.ServicesActivity;
 
 import io.fabric.sdk.android.Fabric;
@@ -26,12 +28,14 @@ import java.util.List;
 public class BrowserActivity extends AppCompatActivity {
     List<HomeWorkItem> homeWorkItemList;
     HwAdapter hwAdapter;
+    static RelativeLayout browserLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_browser);
+        browserLayout = (RelativeLayout) findViewById(R.id.browserLayout);
         homeWorkItemList = new ArrayList<>();
         Button startBT = (Button) findViewById(R.id.button2);
         final ListView listView = (ListView) findViewById(R.id.listView2);
@@ -58,8 +62,13 @@ public class BrowserActivity extends AppCompatActivity {
         homeWorkItemList.add(new HomeWorkItem("Hello AsyncTasks",this, AsyncTaskActivity.class));
         homeWorkItemList.add(new HomeWorkItem("Services Intro",this, ServicesActivity.class));
         homeWorkItemList.add(new HomeWorkItem("Camera Intro",this, Main3Activity.class));
+        homeWorkItemList.add(new HomeWorkItem("From Gallery to Background",this, FromGallery.class));
 
         //setting adapter
         hwAdapter  = new HwAdapter(homeWorkItemList,this);
+    }
+
+    public static RelativeLayout getBrowserLayout() {
+        return browserLayout;
     }
 }
