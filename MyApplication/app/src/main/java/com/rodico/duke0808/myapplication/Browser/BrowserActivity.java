@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.rodico.duke0808.myapplication.R;
 import com.rodico.duke0808.myapplication.activity.AsynkTask.AsyncTaskActivity;
 import com.rodico.duke0808.myapplication.activity.CameraIntro.Main3Activity;
@@ -18,6 +19,7 @@ import com.rodico.duke0808.myapplication.activity.ListWorks.MainActivity;
 import com.rodico.duke0808.myapplication.activity.Notification.NotificationActivity;
 import com.rodico.duke0808.myapplication.activity.Services_Intro.ServicesActivity;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class BrowserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_browser);
         homeWorkItemList = new ArrayList<>();
         Button startBT = (Button) findViewById(R.id.button2);
