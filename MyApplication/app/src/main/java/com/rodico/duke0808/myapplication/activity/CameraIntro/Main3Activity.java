@@ -9,6 +9,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -56,6 +58,8 @@ public class Main3Activity extends AppCompatActivity {
             this.sendBroadcast(mdiaScanInt);
 
             imageView.setImageURI(Uri.fromFile(imgFile));
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.im_view_anim);
+            imageView.startAnimation(animation);
         }
     }
 
