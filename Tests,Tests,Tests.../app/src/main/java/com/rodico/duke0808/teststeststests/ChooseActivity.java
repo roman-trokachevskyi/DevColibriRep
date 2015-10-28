@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -72,7 +73,6 @@ public class ChooseActivity extends AppCompatActivity {
         });
         backGroundIv = (ImageView) findViewById(R.id.imageViewChoose);
         backGroundIv.setImageResource(R.drawable.background_chooser);
-
     }
 
     @Override

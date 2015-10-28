@@ -47,6 +47,7 @@ public class ResultViewActivity extends AppCompatActivity {
             }
         });
         backGroundIv = (ImageView) findViewById(R.id.imageViewRes);
+        backGroundIv.setImageResource(R.drawable.background_res);
         // ADDING ADS
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
