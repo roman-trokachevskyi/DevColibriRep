@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.rodico.duke0808.teststeststests.InformationFragment"
+    android:gravity="center_vertical|center_horizontal">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="InformationAboutTheTest"
+                android:id="@+id/infoTextView"
+                android:layout_gravity="left|top"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="15dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="15dp" />
+        </ScrollView>
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Начать Тест"
+            android:id="@+id/startTestBt"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="onStartClick"
+            android:background="#aaccfe"
+            android:padding="15dp"
+            android:layout_below="@+id/scrollView"
+            android:elevation="3dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Отмена"
+            android:id="@+id/cancelBt"
+            android:onClick="onCancelClick"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="15dp"
+            android:elevation="1dp"
+            android:background="#bad5fe"
+            android:layout_below="@+id/startTestBt"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</RelativeLayout>
