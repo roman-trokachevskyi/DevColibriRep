@@ -15,10 +15,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="pick"
-        android:background="#73a8ff"
+        android:background="@android:drawable/dialog_holo_light_frame"
         android:shadowDx="150"
         android:shadowDy="150"
-        />
+        tools:targetApi="honeycomb" />
 
     <Button
         android:layout_width="wrap_content"

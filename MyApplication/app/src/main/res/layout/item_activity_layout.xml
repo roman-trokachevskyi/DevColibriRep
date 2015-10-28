@@ -4,11 +4,16 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ITEM"
         android:id="@+id/textView4"
         android:layout_gravity="center_horizontal"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:layout_margin="3dp"
+        android:background="#a3c0ff"
+        android:textAlignment="center"
+        android:translationZ="2dp"
+        android:elevation="2dp"/>
 </LinearLayout>

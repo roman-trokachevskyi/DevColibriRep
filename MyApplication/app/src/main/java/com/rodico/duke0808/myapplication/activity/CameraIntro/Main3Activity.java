@@ -1,9 +1,11 @@
 package com.rodico.duke0808.myapplication.activity.CameraIntro;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.session.MediaController;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,7 @@ public class Main3Activity extends AppCompatActivity {
         smallIv = (ImageView) findViewById(R.id.imageView3);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void capture(View v){
         Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (captureIntent.resolveActivity(getPackageManager())!=null){
@@ -60,6 +63,9 @@ public class Main3Activity extends AppCompatActivity {
             imageView.setImageURI(Uri.fromFile(imgFile));
             Animation animation = AnimationUtils.loadAnimation(this, R.anim.im_view_anim);
             imageView.startAnimation(animation);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                imageView.setElevation(5);
+            }
         }
     }
 

@@ -48,5 +48,6 @@
         android:translationZ="10dp"
         android:layout_below="@+id/imageView3"
         android:layout_centerHorizontal="true"
-        android:layout_margin="1dp" />
+        android:layout_margin="1dp"
+        />
 </RelativeLayout>
