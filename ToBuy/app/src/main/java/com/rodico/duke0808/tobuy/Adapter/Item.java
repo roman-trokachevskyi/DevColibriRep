@@ -35,4 +35,7 @@ public class Item {
     public String getLabel(){
         return map.get(ATTRIBUTE_NAME_LABEL).toString();
     }
+    public void setLabel (String label){
+        map.put(ATTRIBUTE_NAME_LABEL, label);
+    }
 }

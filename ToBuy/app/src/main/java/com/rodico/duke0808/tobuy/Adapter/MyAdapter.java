@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.rodico.duke0808.tobuy.MainActivity;
@@ -24,7 +25,7 @@ public class MyAdapter extends DragNDropSimpleAdapter {
 
     @Override
     public View getView(final int position, View view, ViewGroup group) {
-        View view1 =  super.getView(position, view, group);
+        final View view1 =  super.getView(position, view, group);
         CheckBox checkBox = (CheckBox) view1.findViewById(R.id.item_check_box);
         checkBox.setChecked(MainActivity.list.getItemByInd(position).isChecked());
         checkBox.setOnClickListener(new View.OnClickListener() {
@@ -35,13 +36,25 @@ public class MyAdapter extends DragNDropSimpleAdapter {
 
             }
         });
+        final EditText editText = (EditText) view1.findViewById(R.id.item_text);
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (v.getId()==R.id.item_text&&hasFocus==true){
+                    Toast.makeText(MainActivity.context, "inFocus", Toast.LENGTH_SHORT).show();
+                } else if (v.getId()==R.id.item_text&&hasFocus==false){
+                    MainActivity.list.getItemByInd(position).setLabel(editText.getText().toString());
+                    MainActivity.extractToData();
+                }
+            }
+        });
         return view1;
     }
 
     @Override
     public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id) {
         MainActivity.list.fromTo(startPosition,endPosition);
-        MainActivity.extractToData();
+        MainActivity.agressiveSave();
         super.onItemDrop(parent, view, startPosition, endPosition, id);
     }
 }

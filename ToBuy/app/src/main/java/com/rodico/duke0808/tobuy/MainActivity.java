@@ -42,14 +42,18 @@ public class MainActivity extends AppCompatActivity
     public static final String P_NAME_CHECKED = "checked";
     static public ArrayList<Map<String,Object>> data;
     public static Context context;
+    public static Saver saver = null;
+    Saver saver1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = getApplicationContext();
+        saver1 = new Saver();
+        saver = saver1;
 
         listView = (DragNDropListView) findViewById(R.id.drag_n_drop_list_view);
         initList();
@@ -63,9 +67,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Item item = new Item(new_item_label_et.getText().toString());
                 list.addItem(item);
-                extractToData();
-                initAdapter();
-                listView.setDragNDropAdapter(adapter);
+                agressiveSave();
             }
         });
     }
@@ -105,6 +107,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public static void agressiveSave(){
+        saver.save();
+    }
+
+    public class Saver{
+        public void save(){
+            extractToData();
+            initAdapter();
+            listView.setDragNDropAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+    }
 
     @Override
     public void onBackPressed() {
@@ -163,3 +181,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 }
+
