@@ -56,6 +56,18 @@ public class MainActivity extends AppCompatActivity
         extractToData();
         initAdapter();
         listView.setDragNDropAdapter(adapter);
+        ImageButton add_bt = (ImageButton) findViewById(R.id.add_button);
+        final EditText new_item_label_et = (EditText) findViewById(R.id.new_item_et);
+        add_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Item item = new Item(new_item_label_et.getText().toString());
+                list.addItem(item);
+                extractToData();
+                initAdapter();
+                listView.setDragNDropAdapter(adapter);
+            }
+        });
     }
 
     public void initList(){
