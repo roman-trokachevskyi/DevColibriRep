@@ -6,4 +6,5 @@
 
     <string name="action_settings">Settings</string>
     <string name="new_item_et_text">ADD NEW ITEM</string>
+    <string name="action_sort_checked">Sort cheked</string>
 </resources>

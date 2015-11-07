@@ -74,10 +74,14 @@ public class MainActivity extends AppCompatActivity
 
     public void initList(){
         list = new MyList();
-        list.addItem(new Item("Item 1"));
-        list.addItem(new Item("Item 2"));
-        list.addItem(new Item("Item 3"));
-        list.addItem(new Item("Item 4"));
+        list.addItem(new Item("Aaaa"));
+        list.addItem(new Item("Bbbb"));
+        list.addItem(new Item("Cccc"));
+        list.addItem(new Item("Ddddd"));
+        list.addItem(new Item("Item 5"));
+        list.addItem(new Item("Item 6"));
+        list.addItem(new Item("Item 7"));
+        list.addItem(new Item("Item 8"));
     }
 
     static public void extractToData(){
@@ -149,8 +153,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_sort_checked) {
+            list.sortChecked();
+            agressiveSave();
         }
 
         return super.onOptionsItemSelected(item);
