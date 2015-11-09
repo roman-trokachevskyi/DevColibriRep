@@ -54,7 +54,14 @@ public class MyAdapter extends DragNDropSimpleAdapter {
     @Override
     public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id) {
         MainActivity.list.fromTo(startPosition,endPosition);
+        MainActivity.list.checkedDown();
         MainActivity.agressiveSave();
         super.onItemDrop(parent, view, startPosition, endPosition, id);
+    }
+
+    @Override
+    public void onItemDrag(DragNDropListView parent, View view, int position, long id) {
+        MainActivity.extractToData();
+        super.onItemDrag(parent, view, position, id);
     }
 }

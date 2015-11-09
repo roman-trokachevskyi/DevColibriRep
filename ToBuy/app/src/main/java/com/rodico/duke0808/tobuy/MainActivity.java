@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Item item = new Item(new_item_label_et.getText().toString());
                 list.addItem(item);
+                new_item_label_et.setText("");
                 agressiveSave();
             }
         });
@@ -121,11 +122,6 @@ public class MainActivity extends AppCompatActivity
             initAdapter();
             listView.setDragNDropAdapter(adapter);
         }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
     }
 
     @Override
@@ -184,6 +180,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        extractToData();
+        super.onWindowFocusChanged(hasFocus);
     }
 }
 
