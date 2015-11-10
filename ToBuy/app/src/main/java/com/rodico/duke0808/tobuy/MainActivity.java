@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Item item = new Item(new_item_label_et.getText().toString());
                 currentList.addItem(item);
+                currentList.checkedDown();
                 new_item_label_et.setText("");
                 agressiveSave();
             }
@@ -223,6 +224,29 @@ public class MainActivity extends AppCompatActivity
         }
         if (id == 16908332){
             drawer.openDrawer(GravityCompat.START);
+        }
+        if (id == R.id.rename_list){
+            final EditText editText = new EditText(MainActivity.this);
+            editText.setHint("List Name");
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
+            builder.setTitle("New List").setCancelable(true).
+                    setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).setPositiveButton("Rename",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String name = editText.getText().toString();
+                            currentList.setName(name);
+                            agressiveSave();
+                        }
+                    }).setView(editText);
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
 
         return super.onOptionsItemSelected(item);

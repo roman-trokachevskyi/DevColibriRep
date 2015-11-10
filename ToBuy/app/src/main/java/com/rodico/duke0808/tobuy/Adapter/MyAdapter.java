@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.rodico.duke0808.tobuy.MainActivity;
@@ -46,6 +48,15 @@ public class MyAdapter extends DragNDropSimpleAdapter {
                     MainActivity.currentList.getItemByInd(position).setLabel(editText.getText().toString());
                     MainActivity.extractToData();
                 }
+            }
+        });
+        ImageView delete_bt = (ImageView) view1.findViewById(R.id.delete);
+        delete_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.currentList.remove(position);
+                MainActivity.currentList.reIndex();
+                MainActivity.agressiveSave();
             }
         });
         return view1;
