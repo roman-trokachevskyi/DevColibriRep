@@ -74,10 +74,15 @@ public class MyList implements Serializable{
             }
         }
         if (checkedCount==0) firstCheckedInd=0;
+        reIndex();
     }
     public void reIndex(){
+        firstCheckedInd=0;
         for (int i=0;i<list.size();i++) {
             list.get(i).setCurrent_position(i);
+            if (firstCheckedInd==0&&list.get(i).isChecked()){
+                firstCheckedInd=i;
+            }
         }
     }
 

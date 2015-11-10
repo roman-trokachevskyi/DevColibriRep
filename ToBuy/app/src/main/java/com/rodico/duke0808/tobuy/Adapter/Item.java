@@ -36,12 +36,14 @@ public class Item implements Serializable{
         return chekecd;
     }
     public void toggleCheck(){
-        this.setChecked(!(Boolean)map.get(ATTRIBUTE_NAME_CHECKED));
+        parent.reIndex();
+        this.setChecked(!(Boolean) map.get(ATTRIBUTE_NAME_CHECKED));
         if (this.isChecked()==false){
             MainActivity.currentList.checkedCount--;
             MainActivity.currentList.firstCheckedInd++;
         }
         parent.checkedDown();
+        parent.reIndex();
         MainActivity.agressiveSave();
     }
     public String getLabel(){

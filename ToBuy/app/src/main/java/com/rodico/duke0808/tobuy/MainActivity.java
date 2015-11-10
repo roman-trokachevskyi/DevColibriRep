@@ -276,14 +276,12 @@ public class MainActivity extends AppCompatActivity
             dialog.show();
         }
         if (id == R.id.delete_list){
-            allLists.remove(currentList.getId());
-            if (allLists.size()>0) {
-                currentList = (MyList) allLists.get(0).get("currentList");
+            if (allLists.size()>1) {
+                allLists.remove(currentList.getId());
+                agressiveSave();
             } else {
-                adapter = null;
-                currentList = null;
+                Toast.makeText(MainActivity.this, "At least one list...", Toast.LENGTH_SHORT).show();
             }
-            agressiveSave();
         }
 
         return super.onOptionsItemSelected(item);
@@ -300,11 +298,11 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        extractToData();
-        super.onWindowFocusChanged(hasFocus);
-    }
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        extractToData();
+//        super.onWindowFocusChanged(hasFocus);
+//    }
 
     public void saveToFile() throws IOException {
         File dir = getFilesDir();
