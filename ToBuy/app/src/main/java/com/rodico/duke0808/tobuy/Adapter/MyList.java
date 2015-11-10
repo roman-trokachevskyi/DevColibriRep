@@ -1,5 +1,7 @@
 package com.rodico.duke0808.tobuy.Adapter;
 
+import com.rodico.duke0808.tobuy.MainActivity;
+
 import java.util.ArrayList;
 
 /**
@@ -10,11 +12,13 @@ public class MyList {
     String name;
     int firstCheckedInd;
     int checkedCount;
+    int id;
     {
         list = new ArrayList<>();
     }
 
     public MyList() {
+//        addItem(new Item("New Item)"));
         firstCheckedInd=0;
         checkedCount=0;
     }
@@ -100,9 +104,19 @@ public class MyList {
 
     public void setName(String name) {
         this.name = name;
+        MainActivity.allLists.get(id).put("name",name);
+        MainActivity.agressiveSave();
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

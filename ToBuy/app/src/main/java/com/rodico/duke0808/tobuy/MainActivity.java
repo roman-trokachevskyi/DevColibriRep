@@ -1,7 +1,10 @@
 package com.rodico.duke0808.tobuy;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -28,7 +32,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    AllList allLists;
+    public static AllList allLists;
 
     DragNDropListView listView;
     MyAdapter adapter;
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity
     Saver saver1;
     ListView allListView;
     SimpleAdapter allSimpleAdapter;
+    public static Bundle buffer;
+    DrawerLayout drawer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.navig_ic);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         context = getApplicationContext();
         saver1 = new Saver();
         saver = saver1;
+        buffer = new Bundle();
 
         listView = (DragNDropListView) findViewById(R.id.drag_n_drop_list_view);
         initList();
@@ -78,11 +88,51 @@ public class MainActivity extends AppCompatActivity
         allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = (String) allLists.get(position).get("name");
-                Toast.makeText(MainActivity.this, "Clicked: ... "+name, Toast.LENGTH_SHORT).show();
+                //String name = (String) allLists.get(position).get("name");
+                //Toast.makeText(MainActivity.this, "Clicked: ... " + name, Toast.LENGTH_SHORT).show();
+                agressiveSave();
+                currentList= (MyList) allLists.get(position).get("currentList");
+                agressiveSave();
+            }
+        });
+        Button new_list_bt = (Button) findViewById(R.id.new_list_bt);
+        new_list_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                listView.setAdapter(null);
+                adapter=null;
+                final MyList newList = new MyList();
+                final EditText editText = new EditText(MainActivity.this);
+                editText.setHint("List Name");
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
+                builder.setTitle("New List").setCancelable(true).
+                        setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).setPositiveButton("Create",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String name = editText.getText().toString();
+                                currentList.setName(name);
+                                agressiveSave();
+                            }
+                        }).setView(editText);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                allLists.add(newList.getName(), newList);
+                allSimpleAdapter.notifyDataSetChanged();
+                currentList = newList;
+                agressiveSave();
             }
         });
     }
+
+
 
     public void initList(){
         allLists = new AllList();
@@ -130,11 +180,13 @@ public class MainActivity extends AppCompatActivity
         saver.save();
     }
 
+
     public class Saver{
         public void save(){
             extractToData();
             initAdapter();
             listView.setDragNDropAdapter(adapter);
+            allSimpleAdapter.notifyDataSetChanged();
         }
     }
 
@@ -161,11 +213,16 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Toast.makeText(MainActivity.this, ""+ id, Toast.LENGTH_SHORT).show();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_sort_checked) {
             currentList.sortChecked();
             agressiveSave();
+            allSimpleAdapter.notifyDataSetChanged();
+        }
+        if (id == 16908332){
+            drawer.openDrawer(GravityCompat.START);
         }
 
         return super.onOptionsItemSelected(item);
@@ -177,11 +234,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.new_list) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -191,5 +244,7 @@ public class MainActivity extends AppCompatActivity
         extractToData();
         super.onWindowFocusChanged(hasFocus);
     }
+
+
 }
 
