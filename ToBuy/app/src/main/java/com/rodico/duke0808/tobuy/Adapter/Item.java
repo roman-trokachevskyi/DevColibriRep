@@ -2,13 +2,14 @@ package com.rodico.duke0808.tobuy.Adapter;
 
 import com.rodico.duke0808.tobuy.MainActivity;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by duke0808 on 06.11.15.
  */
-public class Item {
+public class Item implements Serializable{
     MyList parent;
     int current_position;
 

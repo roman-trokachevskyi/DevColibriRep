@@ -2,12 +2,13 @@ package com.rodico.duke0808.tobuy.Adapter;
 
 import com.rodico.duke0808.tobuy.MainActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by duke0808 on 06.11.15.
  */
-public class MyList {
+public class MyList implements Serializable{
     ArrayList<Item> list;
     String name;
     int firstCheckedInd;
@@ -19,6 +20,7 @@ public class MyList {
 
     public MyList() {
 //        addItem(new Item("New Item)"));
+        name = "temporary name";
         firstCheckedInd=0;
         checkedCount=0;
     }

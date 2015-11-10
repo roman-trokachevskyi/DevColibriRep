@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +27,18 @@ import com.rodico.duke0808.tobuy.Adapter.MyAdapter;
 import com.rodico.duke0808.tobuy.Adapter.MyList;
 import com.terlici.dragndroplist.DragNDropListView;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     SimpleAdapter allSimpleAdapter;
     public static Bundle buffer;
     DrawerLayout drawer;
+    String fileName = "ToBuySavedData.txt";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +100,14 @@ public class MainActivity extends AppCompatActivity
         allSimpleAdapter = new SimpleAdapter(this,allLists,android.R.layout.simple_list_item_1,from,to);
         allListView.setAdapter(allSimpleAdapter);
         allSimpleAdapter.notifyDataSetChanged();
+        try {
+            loadFromFile();
+            allLists.reindex();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -119,6 +141,7 @@ public class MainActivity extends AppCompatActivity
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String name = editText.getText().toString();
+                                allLists.reindex();
                                 currentList.setName(name);
                                 agressiveSave();
                             }
@@ -187,6 +210,10 @@ public class MainActivity extends AppCompatActivity
             extractToData();
             initAdapter();
             listView.setDragNDropAdapter(adapter);
+            String[] from = {"name"};
+            int[] to = {android.R.id.text1};
+            allSimpleAdapter = new SimpleAdapter(MainActivity.this,allLists,android.R.layout.simple_list_item_1,from,to);
+            allListView.setAdapter(allSimpleAdapter);
             allSimpleAdapter.notifyDataSetChanged();
         }
     }
@@ -248,6 +275,16 @@ public class MainActivity extends AppCompatActivity
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+        if (id == R.id.delete_list){
+            allLists.remove(currentList.getId());
+            if (allLists.size()>0) {
+                currentList = (MyList) allLists.get(0).get("currentList");
+            } else {
+                adapter = null;
+                currentList = null;
+            }
+            agressiveSave();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -267,6 +304,44 @@ public class MainActivity extends AppCompatActivity
     public void onWindowFocusChanged(boolean hasFocus) {
         extractToData();
         super.onWindowFocusChanged(hasFocus);
+    }
+
+    public void saveToFile() throws IOException {
+        File dir = getFilesDir();
+        File file = new File(dir,fileName);
+        FileOutputStream fos = new FileOutputStream(file,false);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(allLists);
+        oos.flush();
+        oos.close();
+        bos.close();
+        fos.close();
+    }
+
+    public void loadFromFile() throws IOException, ClassNotFoundException {
+        File dir = getFilesDir();
+        File file = new File(dir,fileName);
+        file.deleteOnExit();
+        FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        ObjectInputStream ois = new ObjectInputStream(bis);
+        AllList loadedList = (AllList) ois.readObject();
+        allLists = loadedList;
+        listView.setAdapter(null);
+        adapter=null;
+        currentList = (MyList) allLists.get(0).get("currentList");
+        agressiveSave();
+    }
+
+    @Override
+    protected void onPause() {
+        try {
+            saveToFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onPause();
     }
 
 
