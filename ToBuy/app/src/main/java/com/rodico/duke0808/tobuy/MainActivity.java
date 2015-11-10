@@ -2,48 +2,45 @@ package com.rodico.duke0808.tobuy;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.rodico.duke0808.tobuy.Adapter.Item;
 import com.rodico.duke0808.tobuy.Adapter.MyAdapter;
 import com.rodico.duke0808.tobuy.Adapter.MyList;
 import com.terlici.dragndroplist.DragNDropListView;
-import com.terlici.dragndroplist.DragNDropSimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    AllList allLists;
+
     DragNDropListView listView;
     MyAdapter adapter;
-    static public MyList list;
+    static public MyList currentList;
     public static final String P_NAME_LABEL = "label";
     public static final String P_NAME_CHECKED = "checked";
     static public ArrayList<Map<String,Object>> data;
     public static Context context;
     public static Saver saver = null;
     Saver saver1;
+    ListView allListView;
+    SimpleAdapter allSimpleAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,32 +63,49 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Item item = new Item(new_item_label_et.getText().toString());
-                list.addItem(item);
+                currentList.addItem(item);
                 new_item_label_et.setText("");
                 agressiveSave();
+            }
+        });
+
+        allListView = (ListView) findViewById(R.id.all_list_view);
+        String[] from = {"name"};
+        int[] to = {android.R.id.text1};
+        allSimpleAdapter = new SimpleAdapter(this,allLists,android.R.layout.simple_list_item_1,from,to);
+        allListView.setAdapter(allSimpleAdapter);
+        allSimpleAdapter.notifyDataSetChanged();
+        allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = (String) allLists.get(position).get("name");
+                Toast.makeText(MainActivity.this, "Clicked: ... "+name, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void initList(){
-        list = new MyList();
-        list.addItem(new Item("Aaaa"));
-        list.addItem(new Item("Bbbb"));
-        list.addItem(new Item("Cccc"));
-        list.addItem(new Item("Ddddd"));
-        list.addItem(new Item("Item 5"));
-        list.addItem(new Item("Item 6"));
-        list.addItem(new Item("Item 7"));
-        list.addItem(new Item("Item 8"));
+        allLists = new AllList();
+
+        currentList = new MyList();
+        currentList.addItem(new Item("Aaaa"));
+        currentList.addItem(new Item("Bbbb"));
+        currentList.addItem(new Item("Cccc"));
+        currentList.addItem(new Item("Ddddd"));
+        currentList.addItem(new Item("Item 5"));
+        currentList.addItem(new Item("Item 6"));
+        currentList.addItem(new Item("Item 7"));
+        currentList.addItem(new Item("Item 8"));
+        allLists.add("User List", currentList);
     }
 
     static public void extractToData(){
         data=new ArrayList<>();
         HashMap<String,Object> map;
-        for (int i=0; i<list.getSize();i++){
+        for (int i=0; i< currentList.getSize();i++){
             map=new HashMap<>();
-            map.put(P_NAME_LABEL,list.getItemByInd(i).getLabel());
-            map.put(P_NAME_CHECKED,list.getItemByInd(i).isChecked());
+            map.put(P_NAME_LABEL, currentList.getItemByInd(i).getLabel());
+            map.put(P_NAME_CHECKED, currentList.getItemByInd(i).isChecked());
             data.add(map);
         }
     }
@@ -103,12 +117,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     static public void packInList(){
-        list = new MyList();
+        currentList = new MyList();
         Item item;
         for (int i=0;i<data.size();i++){
             item=new Item((String) data.get(i).get(P_NAME_LABEL));
             item.setChecked((Boolean) data.get(i).get(P_NAME_CHECKED));
-            list.addItem(item);
+            currentList.addItem(item);
         }
     }
 
@@ -150,7 +164,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_sort_checked) {
-            list.sortChecked();
+            currentList.sortChecked();
             agressiveSave();
         }
 
@@ -163,17 +177,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.new_list) {
 
         }
 

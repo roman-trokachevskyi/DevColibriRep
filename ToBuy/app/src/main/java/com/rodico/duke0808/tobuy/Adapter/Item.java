@@ -37,8 +37,8 @@ public class Item {
     public void toggleCheck(){
         this.setChecked(!(Boolean)map.get(ATTRIBUTE_NAME_CHECKED));
         if (this.isChecked()==false){
-            MainActivity.list.checkedCount--;
-            MainActivity.list.firstCheckedInd++;
+            MainActivity.currentList.checkedCount--;
+            MainActivity.currentList.firstCheckedInd++;
         }
         parent.checkedDown();
         MainActivity.agressiveSave();

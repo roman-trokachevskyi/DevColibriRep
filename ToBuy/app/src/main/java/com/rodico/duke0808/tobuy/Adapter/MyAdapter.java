@@ -27,11 +27,11 @@ public class MyAdapter extends DragNDropSimpleAdapter {
     public View getView(final int position, View view, ViewGroup group) {
         final View view1 =  super.getView(position, view, group);
         CheckBox checkBox = (CheckBox) view1.findViewById(R.id.item_check_box);
-        checkBox.setChecked(MainActivity.list.getItemByInd(position).isChecked());
+        checkBox.setChecked(MainActivity.currentList.getItemByInd(position).isChecked());
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.list.getItemByInd(position).toggleCheck();
+                MainActivity.currentList.getItemByInd(position).toggleCheck();
                 Toast.makeText(MainActivity.context, "ItemToggled", Toast.LENGTH_SHORT).show();
 
             }
@@ -43,7 +43,7 @@ public class MyAdapter extends DragNDropSimpleAdapter {
                 if (v.getId()==R.id.item_text&&hasFocus==true){
                     Toast.makeText(MainActivity.context, "inFocus", Toast.LENGTH_SHORT).show();
                 } else if (v.getId()==R.id.item_text&&hasFocus==false){
-                    MainActivity.list.getItemByInd(position).setLabel(editText.getText().toString());
+                    MainActivity.currentList.getItemByInd(position).setLabel(editText.getText().toString());
                     MainActivity.extractToData();
                 }
             }
@@ -53,8 +53,8 @@ public class MyAdapter extends DragNDropSimpleAdapter {
 
     @Override
     public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id) {
-        MainActivity.list.fromTo(startPosition,endPosition);
-        MainActivity.list.checkedDown();
+        MainActivity.currentList.fromTo(startPosition,endPosition);
+        MainActivity.currentList.checkedDown();
         MainActivity.agressiveSave();
         super.onItemDrop(parent, view, startPosition, endPosition, id);
     }

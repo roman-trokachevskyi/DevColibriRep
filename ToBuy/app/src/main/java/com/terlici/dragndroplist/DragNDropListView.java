@@ -198,7 +198,7 @@ public class DragNDropListView extends ListView {
 		item.setDrawingCacheEnabled(true);
 		
         // Create a copy of the drawing cache so that it does not get recycled
-        // by the framework when the list tries to clean up memory
+        // by the framework when the currentList tries to clean up memory
         Bitmap bitmap = Bitmap.createBitmap(item.getDrawingCache());
         
         WindowManager.LayoutParams mWindowParams = new WindowManager.LayoutParams();

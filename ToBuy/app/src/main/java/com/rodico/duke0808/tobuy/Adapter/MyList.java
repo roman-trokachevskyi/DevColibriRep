@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class MyList {
     ArrayList<Item> list;
+    String name;
     int firstCheckedInd;
     int checkedCount;
     {
@@ -95,5 +96,13 @@ public class MyList {
                 }
             }
         }
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
