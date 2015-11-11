@@ -8,10 +8,10 @@
         app:showAsAction="always"
         android:icon="@drawable/sort_ic"/>
     <item android:id="@+id/rename_list"
-        android:title="Rename List"
+        android:title="@string/rename_list_str"
         android:showAsAction="never"></item>
     <item android:id="@+id/delete_list"
-        android:title="Delete list"
+        android:title="@string/delete_list_str"
         android:showAsAction="never"></item>
 
 </menu>

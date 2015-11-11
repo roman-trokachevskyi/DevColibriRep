@@ -137,16 +137,16 @@ public class MainActivity extends AppCompatActivity
                 adapter = null;
                 final MyList newList = new MyList();
                 final EditText editText = new EditText(MainActivity.this);
-                editText.setHint("List Name");
+                editText.setHint(R.string.hint_list_name);
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
-                builder.setTitle("New List").setCancelable(true).
-                        setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(R.string.new_list_string)).setCancelable(true).
+                        setNegativeButton(R.string.cancel_string, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                deleteList(currentList.getId());
                             }
-                        }).setPositiveButton("Create",
+                        }).setPositiveButton(getString(R.string.create_positive_bt_str),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -175,15 +175,8 @@ public class MainActivity extends AppCompatActivity
         allLists = new AllList();
 
         currentList = new MyList();
-        currentList.addItem(new Item("Sample Item"));
-//        currentList.addItem(new Item("Bbbb"));
-//        currentList.addItem(new Item("Cccc"));
-//        currentList.addItem(new Item("Ddddd"));
-//        currentList.addItem(new Item("Item 5"));
-//        currentList.addItem(new Item("Item 6"));
-//        currentList.addItem(new Item("Item 7"));
-//        currentList.addItem(new Item("Item 8"));
-        allLists.add("User List", currentList);
+        currentList.addItem(new Item(getString(R.string.sample_item_str)));
+        allLists.add(getString(R.string.user_list_str), currentList);
     }
 
     static public void extractToData(){
@@ -267,16 +260,16 @@ public class MainActivity extends AppCompatActivity
         }
         if (id == R.id.rename_list){
             final EditText editText = new EditText(MainActivity.this);
-            editText.setHint("List Name");
+            editText.setHint(R.string.hint_list_name);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
-            builder.setTitle("New List").setCancelable(true).
-                    setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.rename_list_str)).setCancelable(true).
+                    setNegativeButton(getString(R.string.cancel_string), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                         }
-                    }).setPositiveButton("Rename",
+                    }).setPositiveButton(getString(R.string.rename_positive_bt),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -290,14 +283,18 @@ public class MainActivity extends AppCompatActivity
             dialog.show();
         }
         if (id == R.id.delete_list){
-            if (allLists.size()>1) {
-                allLists.remove(currentList.getId());
-                setCurrentList(0);
-            } else {
-                Toast.makeText(MainActivity.this, "At least one list...", Toast.LENGTH_SHORT).show();
-            }
+            deleteList(currentList.getId());
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void deleteList(int position) {
+        if (allLists.size()>1) {
+            allLists.remove(position);
+            setCurrentList(0);
+        } else {
+            //Toast.makeText(MainActivity.this, "At least one list...", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
