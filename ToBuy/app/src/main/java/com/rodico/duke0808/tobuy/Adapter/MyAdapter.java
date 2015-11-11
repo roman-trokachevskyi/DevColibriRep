@@ -42,9 +42,7 @@ public class MyAdapter extends DragNDropSimpleAdapter {
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (v.getId()==R.id.item_text&&hasFocus==true){
-                    //Toast.makeText(MainActivity.context, "inFocus", Toast.LENGTH_SHORT).show();
-                } else if (v.getId()==R.id.item_text&&hasFocus==false){
+                if (v.getId()==R.id.item_text&&hasFocus==false){
                     MainActivity.currentList.getItemByInd(position).setLabel(editText.getText().toString());
                 }
             }
@@ -77,4 +75,5 @@ public class MyAdapter extends DragNDropSimpleAdapter {
         MainActivity.extractToData();
         super.onItemDrag(parent, view, position, id);
     }
+
 }

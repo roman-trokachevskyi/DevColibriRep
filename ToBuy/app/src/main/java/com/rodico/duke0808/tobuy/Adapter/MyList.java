@@ -128,6 +128,7 @@ public class MyList implements Serializable{
     }
 
     public String getName() {
+        this.name= (String) MainActivity.allLists.get(id).get("name");
         return name;
     }
 

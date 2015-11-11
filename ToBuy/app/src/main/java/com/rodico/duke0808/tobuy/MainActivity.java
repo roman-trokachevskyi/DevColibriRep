@@ -24,11 +24,13 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.rodico.duke0808.tobuy.Adapter.Item;
 import com.rodico.duke0808.tobuy.Adapter.MyAdapter;
 import com.rodico.duke0808.tobuy.Adapter.MyList;
 import com.terlici.dragndroplist.DragNDropListView;
 
+import io.fabric.sdk.android.Fabric;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -67,8 +69,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.navig_ic);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,8 +119,13 @@ public class MainActivity extends AppCompatActivity
                 //String name = (String) allLists.get(position).get("name");
                 //Toast.makeText(MainActivity.this, "Clicked: ... " + name, Toast.LENGTH_SHORT).show();
                 agressiveSave();
-                currentList= (MyList) allLists.get(position).get("currentList");
+                currentList = (MyList) allLists.get(position).get("currentList");
                 agressiveSave();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                toolbar.setTitle(currentList.getName());
             }
         });
         Button new_list_bt = (Button) findViewById(R.id.new_list_bt);
@@ -126,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 //Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 listView.setAdapter(null);
-                adapter=null;
+                adapter = null;
                 final MyList newList = new MyList();
                 final EditText editText = new EditText(MainActivity.this);
                 editText.setHint("List Name");
@@ -154,8 +162,11 @@ public class MainActivity extends AppCompatActivity
                 allSimpleAdapter.notifyDataSetChanged();
                 currentList = newList;
                 agressiveSave();
+                toolbar.setTitle(currentList.getName());
             }
         });
+        agressiveSave();
+        toolbar.setTitle(currentList.getName());
     }
 
 
