@@ -65,13 +65,14 @@ public class MainActivity extends AppCompatActivity
     public static Bundle buffer;
     DrawerLayout drawer;
     public final static String fileName = "ToBuySavedData.txt";
+    Toolbar toolbar = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.navig_ic);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -119,8 +120,7 @@ public class MainActivity extends AppCompatActivity
                 //String name = (String) allLists.get(position).get("name");
                 //Toast.makeText(MainActivity.this, "Clicked: ... " + name, Toast.LENGTH_SHORT).show();
                 agressiveSave();
-                currentList = (MyList) allLists.get(position).get("currentList");
-                agressiveSave();
+                setCurrentList(position);
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         agressiveSave();
-        toolbar.setTitle(currentList.getName());
+        setCurrentList(0);
     }
 
 
@@ -283,6 +283,7 @@ public class MainActivity extends AppCompatActivity
                             String name = editText.getText().toString();
                             currentList.setName(name);
                             agressiveSave();
+                            setCurrentList(currentList.getId());
                         }
                     }).setView(editText);
             AlertDialog dialog = builder.create();
@@ -291,7 +292,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.delete_list){
             if (allLists.size()>1) {
                 allLists.remove(currentList.getId());
-                agressiveSave();
+                setCurrentList(0);
             } else {
                 Toast.makeText(MainActivity.this, "At least one list...", Toast.LENGTH_SHORT).show();
             }
@@ -351,6 +352,11 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         super.onPause();
+    }
+    public void setCurrentList(int id){
+        currentList = (MyList) allLists.get(id).get("currentList");
+        toolbar.setTitle((String) allLists.get(id).get("name"));
+        agressiveSave();
     }
 }
 
