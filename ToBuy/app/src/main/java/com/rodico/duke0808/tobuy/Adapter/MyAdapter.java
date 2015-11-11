@@ -65,6 +65,9 @@ public class MyAdapter extends DragNDropSimpleAdapter {
     public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id) {
         MainActivity.currentList.fromTo(startPosition,endPosition);
         MainActivity.currentList.checkedDown();
+        MainActivity.currentList.reIndex();
+        MainActivity.currentList.checkedDown();
+
         MainActivity.agressiveSave();
         super.onItemDrop(parent, view, startPosition, endPosition, id);
     }

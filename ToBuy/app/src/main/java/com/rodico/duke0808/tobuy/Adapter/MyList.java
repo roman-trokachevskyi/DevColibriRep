@@ -27,6 +27,7 @@ public class MyList implements Serializable{
     public void addItem(Item item){
         item.setParent(this);
         list.add(0, item);
+        checkedDown();
         reIndex();
     }
 
@@ -78,6 +79,15 @@ public class MyList implements Serializable{
     }
     public void reIndex(){
         firstCheckedInd=0;
+        for (int i=0;i<list.size();i++){
+            for (int j=0;j<list.size()-1;j++){
+                if (list.get(j).isChecked()&&!list.get(j+1).isChecked()){
+                    Item item = list.get(j);
+                    list.set(j,list.get(j+1));
+                    list.set(j+1,item);
+                }
+            }
+        }
         for (int i=0;i<list.size();i++) {
             list.get(i).setCurrent_position(i);
             if (firstCheckedInd==0&&list.get(i).isChecked()){
@@ -95,6 +105,8 @@ public class MyList implements Serializable{
     }
 
     public void sortChecked(){
+        checkedDown();
+        reIndex();
         for (int i=firstCheckedInd;i<list.size();i++){
             for (int j=firstCheckedInd;j<list.size()-1;j++){
                 String sj = list.get(j).getLabel();
