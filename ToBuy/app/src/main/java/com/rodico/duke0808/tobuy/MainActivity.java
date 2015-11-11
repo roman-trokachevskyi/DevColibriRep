@@ -1,5 +1,7 @@
 package com.rodico.duke0808.tobuy;
 
+import android.app.backup.BackupManager;
+import android.app.backup.RestoreObserver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     SimpleAdapter allSimpleAdapter;
     public static Bundle buffer;
     DrawerLayout drawer;
-    String fileName = "ToBuySavedData.txt";
+    public final static String fileName = "ToBuySavedData.txt";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -162,14 +164,14 @@ public class MainActivity extends AppCompatActivity
         allLists = new AllList();
 
         currentList = new MyList();
-        currentList.addItem(new Item("Aaaa"));
-        currentList.addItem(new Item("Bbbb"));
-        currentList.addItem(new Item("Cccc"));
-        currentList.addItem(new Item("Ddddd"));
-        currentList.addItem(new Item("Item 5"));
-        currentList.addItem(new Item("Item 6"));
-        currentList.addItem(new Item("Item 7"));
-        currentList.addItem(new Item("Item 8"));
+        currentList.addItem(new Item("Sample Item"));
+//        currentList.addItem(new Item("Bbbb"));
+//        currentList.addItem(new Item("Cccc"));
+//        currentList.addItem(new Item("Ddddd"));
+//        currentList.addItem(new Item("Item 5"));
+//        currentList.addItem(new Item("Item 6"));
+//        currentList.addItem(new Item("Item 7"));
+//        currentList.addItem(new Item("Item 8"));
         allLists.add("User List", currentList);
     }
 
@@ -283,7 +285,6 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "At least one list...", Toast.LENGTH_SHORT).show();
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -320,7 +321,6 @@ public class MainActivity extends AppCompatActivity
     public void loadFromFile() throws IOException, ClassNotFoundException {
         File dir = getFilesDir();
         File file = new File(dir,fileName);
-        file.deleteOnExit();
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
         ObjectInputStream ois = new ObjectInputStream(bis);
@@ -341,7 +341,5 @@ public class MainActivity extends AppCompatActivity
         }
         super.onPause();
     }
-
-
 }
 
