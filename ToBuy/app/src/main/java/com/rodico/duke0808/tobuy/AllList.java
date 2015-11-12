@@ -25,6 +25,7 @@ public class AllList extends ArrayList<Map<String, Object>> implements Serializa
         for (int i = 0;i<this.size();i++){
             MyList list = (MyList) this.get(i).get("currentList");
             list.setId(i);
+            listCounter=i;
         }
     }
 }

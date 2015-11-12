@@ -1,9 +1,12 @@
 package com.rodico.duke0808.tobuy;
 
+import android.app.ActionBar;
 import android.app.backup.BackupManager;
 import android.app.backup.RestoreObserver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -16,11 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -117,15 +123,11 @@ public class MainActivity extends AppCompatActivity
         allListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //String name = (String) allLists.get(position).get("name");
-                //Toast.makeText(MainActivity.this, "Clicked: ... " + name, Toast.LENGTH_SHORT).show();
-                agressiveSave();
                 setCurrentList(position);
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
                 }
-                toolbar.setTitle(currentList.getName());
             }
         });
         Button new_list_bt = (Button) findViewById(R.id.new_list_bt);
@@ -133,42 +135,65 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 //Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
-                listView.setAdapter(null);
-                adapter = null;
-                final MyList newList = new MyList();
-                final EditText editText = new EditText(MainActivity.this);
-                editText.setHint(R.string.hint_list_name);
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
-                builder.setTitle(getString(R.string.new_list_string)).setCancelable(true).
-                        setNegativeButton(R.string.cancel_string, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                deleteList(currentList.getId());
-                            }
-                        }).setPositiveButton(getString(R.string.create_positive_bt_str),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String name = editText.getText().toString();
-                                allLists.reindex();
-                                currentList.setName(name);
-                                agressiveSave();
-                            }
-                        }).setView(editText);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                allLists.add(newList.getName(), newList);
-                allSimpleAdapter.notifyDataSetChanged();
-                currentList = newList;
-                agressiveSave();
-                toolbar.setTitle(currentList.getName());
+                showCreateDialog();
             }
         });
         agressiveSave();
         setCurrentList(0);
     }
 
+    public void showCreateDialog() {
+        listView.setAdapter(null);
+        adapter = null;
+        allLists.reindex();
+        final MyList newList = new MyList();
+        final EditText editText = new EditText(MainActivity.this);
+        RelativeLayout.LayoutParams lpet = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 270);
+        editText.setLayoutParams(lpet);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
+        builder.setTitle(getString(R.string.new_list_string)).setCancelable(true).
+                setNegativeButton(R.string.cancel_string, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteList(currentList.getId());
+                    }
+                }).setPositiveButton(getString(R.string.create_positive_bt_str),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = editText.getText().toString();
+                        allLists.reindex();
+                        currentList.setName(name);
+                        agressiveSave();
+                        setCurrentList(allLists.size()-1);
+                    }
+                }).setView(editText);
+        AlertDialog dialog = builder.create();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(layoutParams);
+        Resources res = Resources.getSystem();
+        Drawable bckg = res.getDrawable(android.R.drawable.dialog_holo_light_frame);
+        dialog.getWindow().setBackgroundDrawable(bckg);
+        dialog.show();
+
+
+        allLists.add(newList.getName(), newList);
+        allSimpleAdapter.notifyDataSetChanged();
+        currentList = newList;
+        agressiveSave();
+        allLists.reindex();
+        toolbar.setTitle(currentList.getName());
+    }
 
 
     public void initList(){
@@ -259,33 +284,48 @@ public class MainActivity extends AppCompatActivity
             drawer.openDrawer(GravityCompat.START);
         }
         if (id == R.id.rename_list){
-            final EditText editText = new EditText(MainActivity.this);
-            editText.setHint(R.string.hint_list_name);
-
-            final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
-            builder.setTitle(getString(R.string.rename_list_str)).setCancelable(true).
-                    setNegativeButton(getString(R.string.cancel_string), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).setPositiveButton(getString(R.string.rename_positive_bt),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String name = editText.getText().toString();
-                            currentList.setName(name);
-                            agressiveSave();
-                            setCurrentList(currentList.getId());
-                        }
-                    }).setView(editText);
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            showRenameDialog();
         }
         if (id == R.id.delete_list){
             deleteList(currentList.getId());
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showRenameDialog() {
+        final EditText editText = new EditText(MainActivity.this);
+        editText.setHint(R.string.hint_list_name);
+        RelativeLayout.LayoutParams lpet = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 270);
+        editText.setLayoutParams(lpet);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AppTheme);
+        builder.setTitle(getString(R.string.rename_list_str)).setCancelable(true).
+                setNegativeButton(getString(R.string.cancel_string), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setPositiveButton(getString(R.string.rename_positive_bt),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = editText.getText().toString();
+                        currentList.setName(name);
+                        agressiveSave();
+                        setCurrentList(currentList.getId());
+                    }
+                }).setView(editText);
+        AlertDialog dialog = builder.create();
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(layoutParams);
+        Resources res = Resources.getSystem();
+        Drawable bckg = res.getDrawable(android.R.drawable.dialog_holo_light_frame);
+        dialog.getWindow().setBackgroundDrawable(bckg);
+        dialog.show();
     }
 
     public void deleteList(int position) {
@@ -308,11 +348,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        extractToData();
-//        super.onWindowFocusChanged(hasFocus);
-//    }
 
     public void saveToFile() throws IOException {
         File dir = getFilesDir();

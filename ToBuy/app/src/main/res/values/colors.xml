@@ -7,4 +7,5 @@
     <color name="textColor">#000000</color>
     <color name="textColorSecondary">#727272</color>
     <color name="backgroundWindow">#00ffffff</color>
+    <color name="background_dialog">#00ffffff</color>
 </resources>
