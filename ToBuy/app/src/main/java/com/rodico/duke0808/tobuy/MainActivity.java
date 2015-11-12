@@ -1,16 +1,12 @@
 package com.rodico.duke0808.tobuy;
 
-import android.app.ActionBar;
-import android.app.backup.BackupManager;
-import android.app.backup.RestoreObserver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,32 +25,27 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
 import com.crashlytics.android.Crashlytics;
 import com.rodico.duke0808.tobuy.Adapter.Item;
 import com.rodico.duke0808.tobuy.Adapter.MyAdapter;
 import com.rodico.duke0808.tobuy.Adapter.MyList;
 import com.terlici.dragndroplist.DragNDropListView;
-
 import io.fabric.sdk.android.Fabric;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     public static AllList allLists;
 
     DragNDropListView listView;
@@ -180,10 +171,13 @@ public class MainActivity extends AppCompatActivity
         layoutParams.copyFrom(dialog.getWindow().getAttributes());
         layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        layoutParams.gravity = Gravity.TOP;
+        layoutParams.verticalMargin = 0.2f;
         dialog.getWindow().setAttributes(layoutParams);
         Resources res = Resources.getSystem();
         Drawable bckg = res.getDrawable(android.R.drawable.dialog_holo_light_frame);
         dialog.getWindow().setBackgroundDrawable(bckg);
+        dialog.setCancelable(false);
         dialog.show();
 
 
@@ -321,10 +315,13 @@ public class MainActivity extends AppCompatActivity
         layoutParams.copyFrom(dialog.getWindow().getAttributes());
         layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        layoutParams.gravity = Gravity.TOP;
+        layoutParams.verticalMargin = 0.2f;
         dialog.getWindow().setAttributes(layoutParams);
         Resources res = Resources.getSystem();
         Drawable bckg = res.getDrawable(android.R.drawable.dialog_holo_light_frame);
         dialog.getWindow().setBackgroundDrawable(bckg);
+        dialog.setCancelable(false);
         dialog.show();
     }
 
@@ -389,6 +386,12 @@ public class MainActivity extends AppCompatActivity
         currentList = (MyList) allLists.get(id).get("currentList");
         toolbar.setTitle((String) allLists.get(id).get("name"));
         agressiveSave();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listView.requestFocus();
     }
 }
 
