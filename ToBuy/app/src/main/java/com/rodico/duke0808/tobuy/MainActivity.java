@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity
         agressiveSave();
         setCurrentList(0);
     }
-
     public void showCreateDialog() {
         listView.setAdapter(null);
         adapter = null;
@@ -188,8 +187,6 @@ public class MainActivity extends AppCompatActivity
         allLists.reindex();
         toolbar.setTitle(currentList.getName());
     }
-
-
     public void initList(){
         allLists = new AllList();
 
@@ -197,7 +194,6 @@ public class MainActivity extends AppCompatActivity
         currentList.addItem(new Item(getString(R.string.sample_item_str)));
         allLists.add(getString(R.string.user_list_str), currentList);
     }
-
     static public void extractToData(){
         data=new ArrayList<>();
         HashMap<String,Object> map;
@@ -208,13 +204,11 @@ public class MainActivity extends AppCompatActivity
             data.add(map);
         }
     }
-
     public void initAdapter(){
         String[] from = {P_NAME_LABEL,P_NAME_CHECKED};
         int[] to = {R.id.item_text,R.id.item_check_box};
         adapter = new MyAdapter(this,data,R.layout.item_layout,from,to,R.id.handler);
     }
-
     static public void packInList(){
         currentList = new MyList();
         Item item;
@@ -224,12 +218,9 @@ public class MainActivity extends AppCompatActivity
             currentList.addItem(item);
         }
     }
-
     public static void agressiveSave(){
         saver.save();
     }
-
-
     public class Saver{
         public void save(){
             extractToData();
@@ -242,7 +233,6 @@ public class MainActivity extends AppCompatActivity
             allSimpleAdapter.notifyDataSetChanged();
         }
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -252,14 +242,12 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -285,7 +273,6 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
     public void showRenameDialog() {
         final EditText editText = new EditText(MainActivity.this);
         editText.setHint(R.string.hint_list_name);
@@ -324,7 +311,6 @@ public class MainActivity extends AppCompatActivity
         dialog.setCancelable(false);
         dialog.show();
     }
-
     public void deleteList(int position) {
         if (allLists.size()>1) {
             allLists.remove(position);
@@ -333,7 +319,6 @@ public class MainActivity extends AppCompatActivity
             //Toast.makeText(MainActivity.this, "At least one list...", Toast.LENGTH_SHORT).show();
         }
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -344,8 +329,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
     public void saveToFile() throws IOException {
         File dir = getFilesDir();
         File file = new File(dir,fileName);
@@ -358,7 +341,6 @@ public class MainActivity extends AppCompatActivity
         bos.close();
         fos.close();
     }
-
     public void loadFromFile() throws IOException, ClassNotFoundException {
         File dir = getFilesDir();
         File file = new File(dir,fileName);
@@ -372,7 +354,6 @@ public class MainActivity extends AppCompatActivity
         currentList = (MyList) allLists.get(0).get("currentList");
         agressiveSave();
     }
-
     @Override
     protected void onPause() {
         try {
@@ -387,7 +368,6 @@ public class MainActivity extends AppCompatActivity
         toolbar.setTitle((String) allLists.get(id).get("name"));
         agressiveSave();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
