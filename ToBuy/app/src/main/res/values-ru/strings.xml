@@ -14,4 +14,5 @@
     <string name="sample_item_str">Просто пункт</string>
     <string name="user_list_str">Мой первый список</string>
     <string name="delete_list_str">Удалить текущий список</string>
+    <string name="log_out_str">Выйти из аккаунта Google</string>
 </resources>
